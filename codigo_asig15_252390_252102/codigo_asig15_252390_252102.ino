@@ -34,6 +34,9 @@ int leds[] = {PIN_LED_0, PIN_LED_1, PIN_LED_2, PIN_LED_3};
 int contadorLtr = 0;
 int contadorRtr = 3;
 
+int contadorFlash = 0;
+bool on_off = false;
+
 void setup() {
   
   for(int i = 0; i < 4; i++){pinMode(leds[i], OUTPUT);}
@@ -58,23 +61,42 @@ void apagarLeds(){
 }
 
 void izquierdaDerecha(){
-  
   if(PAUSA_LTR_RTR.update()){
     apagarLeds();
-    digitalWrite(leds[contador], HIGH);
-    contador++;
-    if (contador > 3){contador = 0;}
+    digitalWrite(leds[contadorLtr], HIGH);
+    contadorLtr++;
+    if (contadorLtr > 3){contadorLtr = 0;}
   }
 }
+
 void derechaIzquierda(){
   if(PAUSA_LTR_RTR.update()){
     apagarLeds();
-    digitalWrite(leds[contador], HIGH);
-    contador--;
-    if (contador < 0){contador = 3;}
+    digitalWrite(leds[contadorRtr], HIGH);
+    contadorRtr--;
+    if (contadorRtr < 0){contadorRtr = 3;}
   }
 }
-void error(){
 
+void error(){
+  
+  if(PAUSA_ERROR.update()){
+
+    if(!on_off){
+      for(int i = 0; i < 4; i++){
+        digitalWrite(leds[i], HIGH);
+      }
+    } else{
+      apagarLeds();
+      contadorFlash++;
+    }
+
+    on_off = !on_off;
+
+    if(contadorFlash > 10){
+      contadorFlash = 0;
+      edoLeds = APAGADO;
+    }
+  }
 }
 
