@@ -83,19 +83,18 @@ void error(){
   if(PAUSA_ERROR.update()){
 
     if(!on_off){
-      for(int i = 0; i < 4; i++){
-        digitalWrite(leds[i], HIGH);
-      }
+      for(int i = 0; i < 4; i++){digitalWrite(leds[i], HIGH);}
+      contadorFlash++;
     } else{
       apagarLeds();
-      contadorFlash++;
     }
 
     on_off = !on_off;
 
-    if(contadorFlash > 10){
+    if(contadorFlash == 10){
       contadorFlash = 0;
       edoLeds = APAGADO;
+      on_off = false;
     }
   }
 }
