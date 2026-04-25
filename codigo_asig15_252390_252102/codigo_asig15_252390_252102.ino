@@ -49,18 +49,49 @@ void setup() {
 }
 
 void loop() {
-  if(edoLeds == ERROR){
-    error();
-  } else{
+  
+  if (edoLeds != ERROR) {
+    
+    if (Serial.available() > 0) {
+      String comando = Serial.readStringUntil('\n');
+      comando.trim();
 
+      if (comando == "off") {
+        apagarLeds(); 
+        edoLeds = APAGADO;
+      } 
+      else if (comando == "ltr" && edoLeds == APAGADO) {
+        edoLeds = LTR;
+        contadorLtr = 0;
+      } 
+      else if (comando == "rtl" && edoLeds == APAGADO) {
+        edoLeds = RTR;
+        contadorRtr = 3;
+      } 
+      else {
+        edoLeds = ERROR;
+        on_off = false;
+      }
+    }
+  }
+
+  switch (edoLeds) {
+    case APAGADO:
+      break;
+    case LTR:
+      izquierdaDerecha();
+      break;
+    case RTR:
+      derechaIzquierda();
+      break;
+    case ERROR:
+      error();
+      break;
   }
 }
 
 void apagarLeds(){
-  
   for(int i = 0; i < 4; i++){digitalWrite(leds[i], LOW);}
-
-  edoLeds = APAGADO;
 }
 
 void izquierdaDerecha(){
