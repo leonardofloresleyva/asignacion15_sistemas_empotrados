@@ -60,16 +60,18 @@ void apagarLeds(){
 void izquierdaDerecha(){
   
   if(PAUSA_LTR_RTR.update()){
-    
-    digitalWrite(leds[contadorLtr], LOW);
+    apagarLeds();
+    digitalWrite(leds[contador], HIGH);
     contador++;
-    if(contadorLtr > 3){contadorLtr = 0;}
-    digitalWrite(leds[contadorLtr], HIGH);
+    if (contador > 3){contador = 0;}
   }
 }
 void derechaIzquierda(){
   if(PAUSA_LTR_RTR.update()){
-
+    apagarLeds();
+    digitalWrite(leds[contador], HIGH);
+    contador--;
+    if (contador < 0){contador = 3;}
   }
 }
 void error(){
