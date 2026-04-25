@@ -49,8 +49,11 @@ void setup() {
 }
 
 void loop() {
+  if(edoLeds == ERROR){
+    error();
+  } else{
 
-
+  }
 }
 
 void apagarLeds(){
