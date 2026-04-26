@@ -57,18 +57,24 @@ void loop() {
       comando.trim();
 
       if (comando == "off") {
+        Serial.println("Comando en ejecución: off");
         apagarLeds(); 
         edoLeds = APAGADO;
       }
       else if (comando == "ltr" && edoLeds == APAGADO) {
+        Serial.println("Comando en ejecución: ltr");
         edoLeds = LTR;
         contadorLtr = 0;
       } 
       else if (comando == "rtl" && edoLeds == APAGADO) {
+        Serial.println("Comando en ejecución: rtl");
         edoLeds = RTL;
         contadorRTL = 3;
       } 
-      else {edoLeds = ERROR;}
+      else {
+        Serial.print("Comando erróneo: ");
+        Serial.println(comando);
+        edoLeds = ERROR;}
     }
   }
 
